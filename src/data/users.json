@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Husen Lokhandwala",
+    "email": "coder.husen@gmail.com",
+    "role": "Admin"
+  },
+  {
+    "id": 2,
+    "name": "Himanshu patel",
+    "email": "himanshu@gmail.com",
+    "role": "Admin"
+  }
+]
