@@ -64,5 +64,47 @@
     "name": "Leanne Graham",
     "email": "Sincere@april.biz",
     "role": "User"
+  },
+  {
+    "id": 12,
+    "name": "Ervin Howell",
+    "email": "Shanna@melissa.tv",
+    "role": "User"
+  },
+  {
+    "id": 13,
+    "name": "Clementine Bauch",
+    "email": "Nathan@yesenia.net",
+    "role": "User"
+  },
+  {
+    "id": 14,
+    "name": "Patricia Lebsack",
+    "email": "Julianne.OConner@kory.org",
+    "role": "Admin"
+  },
+  {
+    "id": 15,
+    "name": "Chelsey Dietrich",
+    "email": "Lucio_Hettinger@annie.ca",
+    "role": "User"
+  },
+  {
+    "id": 16,
+    "name": "Ervin Howell",
+    "email": "Shanna@melissa.tv",
+    "role": "User"
+  },
+  {
+    "id": 17,
+    "name": "Clementine Bauch",
+    "email": "Nathan@yesenia.net",
+    "role": "User"
+  },
+  {
+    "id": 18,
+    "name": "Patricia Lebsack",
+    "email": "Julianne.OConner@kory.org",
+    "role": "Admin"
   }
 ]
