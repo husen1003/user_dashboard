@@ -7,8 +7,62 @@
   },
   {
     "id": 2,
-    "name": "Himanshu patel",
-    "email": "himanshu@gmail.com",
+    "name": "Ervin Howell",
+    "email": "Shanna@melissa.tv",
+    "role": "User"
+  },
+  {
+    "id": 3,
+    "name": "Clementine Bauch",
+    "email": "Nathan@yesenia.net",
+    "role": "User"
+  },
+  {
+    "id": 4,
+    "name": "Patricia Lebsack",
+    "email": "Julianne.OConner@kory.org",
     "role": "Admin"
+  },
+  {
+    "id": 5,
+    "name": "Chelsey Dietrich",
+    "email": "Lucio_Hettinger@annie.ca",
+    "role": "User"
+  },
+  {
+    "id": 6,
+    "name": "Mrs. Dennis Schulist",
+    "email": "Karley_Dach@jasper.info",
+    "role": "User"
+  },
+  {
+    "id": 7,
+    "name": "Kurtis Weissnat",
+    "email": "Telly.Hoeger@billy.biz",
+    "role": "User"
+  },
+  {
+    "id": 8,
+    "name": "Nicholas Runolfsdottir V",
+    "email": "Sherwood@rosamond.me",
+    "role": "User"
+  },
+  {
+    "id": 9,
+    "name": "Glenna Reichert",
+    "email": "Chaim_McDermott@dana.io",
+    "role": "User"
+  },
+  {
+    "id": 10,
+    "name": "Clementina DuBuque",
+    "email": "Rey.Padberg@karina.biz",
+    "role": "User"
+  },
+  {
+    "id": 11,
+    "name": "Leanne Graham",
+    "email": "Sincere@april.biz",
+    "role": "User"
   }
 ]

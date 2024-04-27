@@ -1,9 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAppContext from "../hooks/useContext";
 
 const UserList = ({ data = [] }) => {
-  const { users } = useAppContext();
+  const navigate = useNavigate();
+
+  // getting data from context
+  const { users, setUsers } = useAppContext();
+
+  // function for removing users
+  const handleDelete = (user) => {
+    if (window.confirm(`Are you sure you want to remove ${user.name}?`))
+      setUsers((prevUsers) => prevUsers.filter(({ id }) => id !== user.id));
+  };
+
+  // navigating with userData
+  const handleNavigate = (userData) => {
+    navigate("/user-details", { state: userData });
+  };
+
+  console.log(users);
   return (
     <div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-400">
@@ -40,30 +56,31 @@ const UserList = ({ data = [] }) => {
           </tr>
         </thead>
         <tbody>
-          {users.map(({ id, name, email, role }) => (
-            <tr
-              key={id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-            >
-              <td className="px-6 py-4">{id}</td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                {name}
-              </th>
-              <td className="px-6 py-4">{email}</td>
-              <td className="px-6 py-4">{role}</td>
-              <td className="px-6 py-4 text-right">
-                <Link
-                  to="/user-details"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+          {users.map((userData = {}) => {
+            const { id, name, email, role } = userData;
+            return (
+              <tr key={id} className="border-b bg-gray-800 border-gray-700">
+                <td className="px-6 py-4">{id}</td>
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium whitespace-nowrap text-white underline cursor-pointer"
+                  onClick={() => handleNavigate(userData)}
                 >
-                  Edit
-                </Link>
-              </td>
-            </tr>
-          ))}
+                  {name}
+                </th>
+                <td className="px-6 py-4">{email}</td>
+                <td className="px-6 py-4">{role}</td>
+                <td className="px-6 py-4 text-right">
+                  <span
+                    onClick={() => handleDelete(userData)}
+                    className="font-medium text-red-500 hover:underline cursor-pointer"
+                  >
+                    Delete
+                  </span>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

@@ -1,13 +1,26 @@
 import cx from "classnames";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import useAppContext from "../hooks/useContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UserForm = () => {
+  const { setUsers } = useAppContext();
+  const navigate = useNavigate();
+
+  // getting data from table navigation (while clicking on user name)
+  const { state } = useLocation();
+
+  // storing current user data into this variable
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     role: "",
   });
+  const [isEditing, setIsEditing] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // if getting data from table navigation and not editing then we will disable all fields
+  const isDisabled = state?.id && !isEditing;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,13 +46,43 @@ const UserForm = () => {
     return Object.keys(formError).length;
   };
 
+  // Create or update user function while submitting the form
   const handleSubmit = (e) => {
     e.preventDefault();
     const hasError = validate();
     if (hasError) return;
     setErrors({});
-    console.log({ formData });
+
+    // if updating user
+    if (state) {
+      setUsers((prevUsers) => {
+        const updatedUser = [...prevUsers];
+        const userIndex = updatedUser.indexOf(
+          updatedUser.find(({ id }) => id === state.id)
+        );
+        updatedUser[userIndex] = {
+          ...updatedUser[userIndex],
+          ...formData,
+        };
+        return updatedUser;
+      });
+    } else {
+      // else creating new user
+      setUsers((prevUsers) => {
+        const id = prevUsers[prevUsers.length - 1]?.id + 1;
+        return [...prevUsers, { id, ...formData }];
+      });
+    }
+    navigate("/");
   };
+
+  const handleEdit = () => {
+    setIsEditing(!isEditing);
+
+    // resetting the data if cancelling
+    setFormData(state);
+  };
+
   const getClassName = useCallback(
     (field) => {
       return {
@@ -57,13 +100,31 @@ const UserForm = () => {
     },
     [errors]
   );
+
+  useEffect(() => {
+    if (state) setFormData(state);
+  }, [state]);
+
   return (
     <div className="flex h-screen justify-center items-center">
       <form
         onSubmit={handleSubmit}
         className="w-11/12 sm:max-w-sm mx-auto bg-gray-700 p-8 rounded-xl shadow-xl"
       >
-        <h1 className="text-center text-2xl mb-5">User form</h1>
+        {state && (
+          <div className="flex justify-end w-full">
+            <button
+              type="button"
+              onClick={handleEdit}
+              className="text-gray-700 bg-gray-400 px-2 rounded-md"
+            >
+              {isEditing ? "Cancel" : "Edit"}
+            </button>
+          </div>
+        )}
+        <h1 className="text-center text-2xl mb-5">
+          {state ? "Update" : "Add"} User
+        </h1>
         <div className="mb-5">
           <label htmlFor="name" className={getClassName("name").labelClass}>
             User Name
@@ -72,7 +133,9 @@ const UserForm = () => {
             type="text"
             id="name"
             name="name"
+            value={formData.name}
             onChange={handleChange}
+            disabled={isDisabled}
             className={getClassName("name").inputClass}
             placeholder="Enter your name..."
           />
@@ -88,7 +151,9 @@ const UserForm = () => {
             type="text"
             id="email"
             name="email"
+            value={formData.email}
             onChange={handleChange}
+            disabled={isDisabled}
             className={getClassName("email").inputClass}
             placeholder="name@example.com"
           />
@@ -103,8 +168,10 @@ const UserForm = () => {
           <select
             name="role"
             id="role"
+            value={formData.role}
             onChange={handleChange}
             className={getClassName("role").inputClass}
+            disabled={isDisabled}
             placeholder="name@example.com"
           >
             <option value="">Select role</option>
@@ -118,12 +185,14 @@ const UserForm = () => {
             {errors?.role}
           </p>
         </div>
-        <button
-          type="submit"
-          className="bg-gray-400 text-gray-700 px-5 py-1 rounded-lg w-full mt-5"
-        >
-          Add User
-        </button>
+        {!isDisabled && (
+          <button
+            type="submit"
+            className="bg-gray-400 text-gray-700 px-5 py-1 rounded-lg w-full mt-5"
+          >
+            {state ? "Update" : "Add"} User
+          </button>
+        )}
       </form>
     </div>
   );
